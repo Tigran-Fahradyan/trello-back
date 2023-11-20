@@ -13,13 +13,15 @@ default: &default
   adapter: mysql2
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: root
-  password:
-  socket: /var/run/mysqld/mysqld.sock
+  username: <%= ENV["DB_USER"] %>
+  password: <%= ENV["DB_PASS"] %>
+  variables:
+    sql_mode: STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION
+#  socket: /var/run/mysqld/mysqld.sock
 
 development:
   <<: *default
-  database: trello_back_development
+  database: <%= ENV["DB_NAME"] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -50,6 +52,4 @@ test:
 #
 production:
   <<: *default
-  database: trello_back_production
-  username: trello_back
-  password: <%= ENV["TRELLO_BACK_DATABASE_PASSWORD"] %>
+  database: <%= ENV["DB_NAME"] %>
