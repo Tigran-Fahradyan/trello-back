@@ -35,7 +35,7 @@ package-lock.json
 
 # Ignore application configuration
 *.env
-*.lock
+#*.lock
 db/schema.rb
 dump.rdb
 node_modules
