@@ -50,6 +50,10 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+#production:
+#  <<: *default
+#  database: <%#= ENV["DB_NAME"] %>
+
 production:
   <<: *default
-  database: <%= ENV["DB_NAME"] %>
+  url: <%= ENV['JAWSDB_URL'] %>
