@@ -52,7 +52,7 @@ test:
 #
 #production:
 #  <<: *default
-#  database: <%#= ENV["DB_NAME"] %>
+#  database: <%= ENV["DB_NAME"] %>
 
 production:
   <<: *default
