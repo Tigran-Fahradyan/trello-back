@@ -4,11 +4,22 @@
     "title": "API"
   },
   "paths": {
-    "/board_lists": {
+    "/boards/{board_id}/board_lists": {
       "get": {
         "summary": "List all available Board Lists",
         "tags": [
           "Board Lists"
+        ],
+        "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "Board id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -46,7 +57,15 @@
           "Board Lists"
         ],
         "parameters": [
-
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "Board id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
         ],
         "responses": {
           "201": {
@@ -92,13 +111,22 @@
         }
       }
     },
-    "/board_lists/{id}": {
+    "/boards/{board_id}/board_lists/{id}": {
       "get": {
         "summary": "Fetch specific Board List",
         "tags": [
           "Board Lists"
         ],
         "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "Board id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -136,6 +164,15 @@
           "Board Lists"
         ],
         "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "Board id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -195,6 +232,15 @@
           "Board Lists"
         ],
         "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "Board id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -460,11 +506,31 @@
         }
       }
     },
-    "/list_tasks": {
+    "/boards/{board_id}/board_lists/{board_list_id}/list_tasks": {
       "get": {
         "summary": "List all available Lists Tasks",
         "tags": [
           "List Tasks"
+        ],
+        "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "Board Id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "board_list_id",
+            "in": "path",
+            "description": "Board List Id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
         ],
         "responses": {
           "200": {
@@ -482,7 +548,7 @@
                       "name": {
                         "type": "string"
                       },
-                      "email": {
+                      "description": {
                         "type": "string"
                       }
                     }
@@ -502,7 +568,24 @@
           "List Tasks"
         ],
         "parameters": [
-
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "Board Id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "board_list_id",
+            "in": "path",
+            "description": "Board List Id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
         ],
         "responses": {
           "201": {
@@ -518,7 +601,7 @@
                     "name": {
                       "type": "string"
                     },
-                    "email": {
+                    "description": {
                       "type": "string"
                     }
                   }
@@ -538,6 +621,9 @@
                     "properties": {
                       "name": {
                         "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
                       }
                     }
                   }
@@ -548,13 +634,31 @@
         }
       }
     },
-    "/list_tasks/{id}": {
+    "/boards/{board_id}/board_lists/{board_list_id}/list_tasks/{id}": {
       "get": {
         "summary": "Fetch specific List Task",
         "tags": [
           "List Tasks"
         ],
         "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "Board Id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "board_list_id",
+            "in": "path",
+            "description": "Board List Id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -575,6 +679,9 @@
                   "properties": {
                     "name": {
                       "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -592,6 +699,24 @@
           "List Tasks"
         ],
         "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "Board Id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "board_list_id",
+            "in": "path",
+            "description": "Board List Id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -616,7 +741,7 @@
                     "name": {
                       "type": "string"
                     },
-                    "email": {
+                    "description": {
                       "type": "string"
                     }
                   }
@@ -636,6 +761,9 @@
                     "properties": {
                       "name": {
                         "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
                       }
                     }
                   }
@@ -651,6 +779,24 @@
           "List Tasks"
         ],
         "parameters": [
+          {
+            "name": "board_id",
+            "in": "path",
+            "description": "Board Id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "board_list_id",
+            "in": "path",
+            "description": "Board List Id.",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
           {
             "name": "id",
             "in": "path",
@@ -669,14 +815,6 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "list_task": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        }
-                      }
-                    }
                   },
                   "required": [
                     "id"

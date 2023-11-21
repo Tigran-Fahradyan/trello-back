@@ -1,11 +1,13 @@
 require 'swagger_helper'
 
 describe 'List Tasks', swagger_doc: 'swagger.json' do
-  path '/list_tasks' do
+  path '/boards/{board_id}/board_lists/{board_list_id}/list_tasks' do
     get 'List all available Lists Tasks' do
       tags 'List Tasks'
       consumes 'application/json'
       produces 'application/json'
+      parameter name: :board_id, in: :path, type: :integer, description: "Board Id."
+      parameter name: :board_list_id, in: :path, type: :integer, description: "Board List Id."
 
       response 200, 'list tasks listed' do
         schema type: :array,
@@ -18,7 +20,7 @@ describe 'List Tasks', swagger_doc: 'swagger.json' do
                    name: {
                      type: :string
                    },
-                   email: {
+                   description: {
                      type: :string
                    }
                  }
@@ -33,6 +35,8 @@ describe 'List Tasks', swagger_doc: 'swagger.json' do
       consumes 'application/json'
       produces 'application/json'
 
+      parameter name: :board_id, in: :path, type: :integer, description: "Board Id."
+      parameter name: :board_list_id, in: :path, type: :integer, description: "Board List Id."
       parameter name: :list_task, in: :body, schema: {
         type: :object,
         properties: {
@@ -41,7 +45,10 @@ describe 'List Tasks', swagger_doc: 'swagger.json' do
             properties: {
               name: {
                 type: :string
-              }
+              },
+              description: {
+                type: :string
+              },
             }
           }
         }
@@ -56,7 +63,7 @@ describe 'List Tasks', swagger_doc: 'swagger.json' do
                  name: {
                    type: :string
                  },
-                 email: {
+                 description: {
                    type: :string
                  }
                }
@@ -65,17 +72,22 @@ describe 'List Tasks', swagger_doc: 'swagger.json' do
     end
   end
 
-  path '/list_tasks/{id}' do
+  path '/boards/{board_id}/board_lists/{board_list_id}/list_tasks/{id}' do
     get 'Fetch specific List Task' do
       tags 'List Tasks'
       consumes 'application/json'
       produces 'application/json'
+      parameter name: :board_id, in: :path, type: :integer, description: "Board Id."
+      parameter name: :board_list_id, in: :path, type: :integer, description: "Board List Id."
       parameter name: :id, in: :path, type: :integer, description: "List Task id."
 
       response 200, 'List Task fetched' do
         schema type: :object,
                properties: {
                  name: {
+                   type: :string
+                 },
+                 description: {
                    type: :string
                  }
                },
@@ -88,7 +100,9 @@ describe 'List Tasks', swagger_doc: 'swagger.json' do
       tags 'List Tasks'
       consumes 'application/json'
       produces 'application/json'
-      
+
+      parameter name: :board_id, in: :path, type: :integer, description: "Board Id."
+      parameter name: :board_list_id, in: :path, type: :integer, description: "Board List Id."
       parameter name: :id, in: :path, type: :integer, description: "List Task id."
       parameter name: :list_task, in: :body, schema: {
         type: :object,
@@ -97,6 +111,9 @@ describe 'List Tasks', swagger_doc: 'swagger.json' do
             type: :object,
             properties: {
               name: {
+                type: :string
+              },
+              description: {
                 type: :string
               }
             }
@@ -113,7 +130,7 @@ describe 'List Tasks', swagger_doc: 'swagger.json' do
                  name: {
                    type: :string
                  },
-                 email: {
+                 description: {
                    type: :string
                  }
                }
@@ -125,20 +142,13 @@ describe 'List Tasks', swagger_doc: 'swagger.json' do
       tags 'List Tasks'
       consumes 'application/json'
       produces 'application/json'
+      parameter name: :board_id, in: :path, type: :integer, description: "Board Id."
+      parameter name: :board_list_id, in: :path, type: :integer, description: "Board List Id."
       parameter name: :id, in: :path, type: :integer, description: "List Task id."
 
       response 200, 'list task created' do
         schema type: :object,
-               properties: {
-                 list_task: {
-                   type: :object,
-                   properties: {
-                     name: {
-                       type: :string
-                     }
-                   }
-                 }
-               },
+               properties: {},
                required: [:id]
         run_test!
       end

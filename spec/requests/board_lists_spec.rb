@@ -1,11 +1,12 @@
 require 'swagger_helper'
 
 describe 'Board Lists', swagger_doc: 'swagger.json' do
-  path '/board_lists' do
+  path '/boards/{board_id}/board_lists' do
     get 'List all available Board Lists' do
       tags 'Board Lists'
       consumes 'application/json'
       produces 'application/json'
+      parameter name: :board_id, in: :path, type: :integer, description: "Board id."
 
       response 200, 'board lists listed' do
         schema type: :array,
@@ -33,6 +34,7 @@ describe 'Board Lists', swagger_doc: 'swagger.json' do
       consumes 'application/json'
       produces 'application/json'
 
+      parameter name: :board_id, in: :path, type: :integer, description: "Board id."
       parameter name: :board_list_list, in: :body, schema: {
         type: :object,
         properties: {
@@ -65,11 +67,12 @@ describe 'Board Lists', swagger_doc: 'swagger.json' do
     end
   end
 
-  path '/board_lists/{id}' do
+  path '/boards/{board_id}/board_lists/{id}' do
     get 'Fetch specific Board List' do
       tags 'Board Lists'
       consumes 'application/json'
       produces 'application/json'
+      parameter name: :board_id, in: :path, type: :integer, description: "Board id."
       parameter name: :id, in: :path, type: :integer, description: "Board List id."
 
       response 200, 'Board List fetched' do
@@ -88,7 +91,8 @@ describe 'Board Lists', swagger_doc: 'swagger.json' do
       tags 'Board Lists'
       consumes 'application/json'
       produces 'application/json'
-      
+
+      parameter name: :board_id, in: :path, type: :integer, description: "Board id."
       parameter name: :id, in: :path, type: :integer, description: "Board List id."
       parameter name: :board_list, in: :body, schema: {
         type: :object,
@@ -125,6 +129,7 @@ describe 'Board Lists', swagger_doc: 'swagger.json' do
       tags 'Board Lists'
       consumes 'application/json'
       produces 'application/json'
+      parameter name: :board_id, in: :path, type: :integer, description: "Board id."
       parameter name: :id, in: :path, type: :integer, description: "Board List id."
 
       response 200, 'boards created' do
