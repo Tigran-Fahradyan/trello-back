@@ -155,5 +155,107 @@ describe 'List Tasks', swagger_doc: 'swagger.json' do
     end
   end
 
+  path '/boards/{board_id}/board_lists/{board_list_id}/list_tasks/{id}/assign_user' do
+    post 'Assign User' do
+      tags 'List Tasks'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :board_id, in: :path, type: :integer, description: "Board Id."
+      parameter name: :board_list_id, in: :path, type: :integer, description: "Board List Id."
+      parameter name: :id, in: :path, type: :integer, description: "List Task id."
+      parameter name: :task_user, in: :body, schema: {
+        type: :object,
+        properties: {
+          task_user: {
+            type: :object,
+            properties: {
+              user_id: {
+                type: :integer
+              }
+            }
+          }
+        }
+      }, required: [:board_id, :board_list_id, :id]
+
+      response 200, 'User assigned' do
+        schema type: :object,
+               properties: {
+                 id: {
+                   type: :integer
+                 },
+                 name: {
+                   type: :string
+                 },
+                 email: {
+                   type: :string
+                 }
+               }
+        run_test!
+      end
+    end
+  end
+
+  path '/boards/{board_id}/board_lists/{board_list_id}/list_tasks/{id}/unassign_user' do
+    delete 'Unassign User' do
+      tags 'List Tasks'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :board_id, in: :path, type: :integer, description: "Board Id."
+      parameter name: :board_list_id, in: :path, type: :integer, description: "Board List Id."
+      parameter name: :id, in: :path, type: :integer, description: "List Task id."
+      parameter name: :task_user, in: :body, schema: {
+        type: :object,
+        properties: {
+          task_user: {
+            type: :object,
+            properties: {
+              user_id: {
+                type: :integer
+              }
+            }
+          }
+        }
+      }, required: [:board_id, :board_list_id, :id]
+
+      response 200, 'User unassigned' do
+        schema type: :object,
+               properties: {
+               },
+               required: [:id, :user_id]
+        run_test!
+      end
+    end
+  end
+
+  path '/boards/{board_id}/board_lists/{board_list_id}/list_tasks/{id}/users' do
+    get 'List all available task users' do
+      tags 'List Tasks'
+      consumes 'application/json'
+      produces 'application/json'
+      parameter name: :board_id, in: :path, type: :integer, description: "Board Id."
+      parameter name: :board_list_id, in: :path, type: :integer, description: "Board List Id."
+      parameter name: :id, in: :path, type: :integer, description: "List Task id."
+
+      response 200, 'task users listed' do
+        schema type: :array,
+               items: {
+                 type: :object,
+                 properties: {
+                   id: {
+                     type: :integer
+                   },
+                   name: {
+                     type: :string
+                   },
+                   email: {
+                     type: :string
+                   }
+                 }
+               },
+               required: []
+        run_test!
+      end
+    end
+  end
 
 end

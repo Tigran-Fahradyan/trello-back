@@ -7,8 +7,19 @@ Rails.application.routes.draw do
 
   resources :users, except: :edit
   resources :boards, except: :edit do
+    member do
+      post :assign_user
+      delete :unassign_user
+      get :users
+    end
     resources :board_lists, except: :edit do
-      resources :list_tasks, except: :edit
+      resources :list_tasks, except: :edit do
+        member do
+          post :assign_user
+          delete :unassign_user
+          get :users
+        end
+      end
     end
   end
 end

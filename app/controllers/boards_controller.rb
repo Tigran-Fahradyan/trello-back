@@ -1,5 +1,7 @@
 class BoardsController < ApplicationController
 
+  before_action :get_board, only: [:assign_user, :unassign_user, :users]
+
   def index
     render json: Board.all.select(:id, :name)
   end
@@ -35,6 +37,31 @@ class BoardsController < ApplicationController
     render json: {error: $!.message}, status: :bad_request
   end
 
+  def assign_user
+    raise ActiveRecord::RecordNotFound, "Board not found" if @board.blank?
+    user = User.where(id: assign_user_params[:user_id]).select(:id, :full_name, :email).first
+    raise ActiveRecord::RecordNotFound, "User not found" if user.blank?
+    board_user = @board.board_users.find_or_create_by!(user_id: user.id)
+    render json: board_user
+  rescue
+    render json: {error: $!.message}, status: :bad_request
+  end
+
+  def unassign_user
+    raise ActiveRecord::RecordNotFound, "Board not found" if @board.blank?
+    user = User.where(id: assign_user_params[:user_id]).select(:id, :full_name, :email).first
+    raise ActiveRecord::RecordNotFound, "User not found" if user.blank?
+    board_user = @board.board_users.find_by(user_id: user.id)
+    board_user.destroy if board_user.present?
+    render json: {}, status: :ok
+  rescue
+    render json: {error: $!.message}, status: :bad_request
+  end
+
+  def users
+    render json: @board.users.select(:id, :full_name, :email)
+  end
+
   private
 
   def board_create_params
@@ -43,6 +70,14 @@ class BoardsController < ApplicationController
 
   def board_update_params
     params.require(:board).permit!
+  end
+
+  def assign_user_params
+    params.require(:board_user).permit!
+  end
+
+  def get_board
+    @board = Board.find_by_id(params[:id])
   end
 
 end
